@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raise Complaint</title>
+</head>
+
+<body style="
+    margin:0;
+    min-height:100vh;
+    font-family:'Segoe UI', Arial;
+
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1590650153855-d9e808231d41');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+">
+
+
+<div style="
+    width:420px;
+    background:#ffffff;
+    padding:30px 28px;
+    border-radius:18px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.4);
+    text-align:center;
+">
+
+    <h2 style="margin-bottom:6px;color:#333;">
+        Raise Complaint
+    </h2>
+    <p style="margin-top:0;color:#777;font-size:14px;">
+        Online Complaint Management System
+    </p>
+
+    <div style="margin-bottom:18px;">
+        <a href="/" style="text-decoration:none;color:#667eea;font-weight:600;">Raise</a>
+        |
+        <a href="/status/" style="text-decoration:none;color:#667eea;font-weight:600;">Status</a>
+    </div>
+
+    <form name="complaintForm" method="post" onsubmit="return validateForm()">
+        {% csrf_token %}
+
+        <input type="text" name="name" placeholder="Your Name"
+        style="width:100%;padding:12px;margin-bottom:12px;
+        border-radius:10px;border:1px solid #ccc;">
+
+        <input type="email" name="email" placeholder="Email"
+        style="width:100%;padding:12px;margin-bottom:12px;
+        border-radius:10px;border:1px solid #ccc;">
+
+        <input type="text" name="subject" placeholder="Subject"
+        style="width:100%;padding:12px;margin-bottom:12px;
+        border-radius:10px;border:1px solid #ccc;">
+
+        <textarea name="description" placeholder="Describe your issue"
+        style="width:100%;padding:12px;height:90px;margin-bottom:18px;
+        border-radius:10px;border:1px solid #ccc;"></textarea>
+
+        <button type="submit"
+        style="
+            width:100%;
+            padding:13px;
+            background: linear-gradient(135deg,#667eea,#5a67d8);
+            color:white;
+            border:none;
+            border-radius:30px;
+            font-size:15px;
+            cursor:pointer;
+        ">
+            Submit Complaint
+        </button>
+    </form>
+
+</div>
+
+<!-- ✅ JavaScript -->
+<script>
+function validateForm() {
+    let f = document.forms["complaintForm"];
+
+    if (f["name"].value.trim() === "") {
+        alert("Please enter your name");
+        return false;
+    }
+    if (f["email"].value.trim() === "") {
+        alert("Please enter your email");
+        return false;
+    }
+    if (f["subject"].value.trim() === "") {
+        alert("Please enter subject");
+        return false;
+    }
+    if (f["description"].value.trim() === "") {
+        alert("Please describe the issue");
+        return false;
+    }
+    return true;
+}
+</script>
+
+</body>
+</html>

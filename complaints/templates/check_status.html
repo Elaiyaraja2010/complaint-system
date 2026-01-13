@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Check Complaint Status</title>
+
+    <!-- ===== STYLE SECTION (TOP) ===== -->
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('https://images.unsplash.com/photo-1590650153855-d9e808231d41');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            width: 520px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        p.subtitle {
+            color: #777;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        a.back-link {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg,#667eea,#5a67d8);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 25px;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .status-open {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .status-closed {
+            color: green;
+            font-weight: bold;
+        }
+
+        .no-data {
+            margin-top: 20px;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== HTML SECTION (BOTTOM) ===== -->
+
+<div class="card">
+
+    <h2>Check Complaint Status</h2>
+    <p class="subtitle">Track your complaint using email</p>
+
+    <div style="margin:15px 0;">
+        <a href="/" class="back-link">⬅ Raise Complaint</a>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <button type="submit">Check Status</button>
+    </form>
+
+    {% if searched %}
+        {% if complaints %}
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for c in complaints %}
+                <tr>
+                    <td>{{ c.subject }}</td>
+                    <td class="{% if c.status == 'Open' %}status-open{% else %}status-closed{% endif %}">
+                        {{ c.status }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p class="no-data">❌ No complaints found for this email</p>
+        {% endif %}
+    {% endif %}
+
+</div>
+
+</body>
+</html>
